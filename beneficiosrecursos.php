@@ -9,6 +9,7 @@ if(isset($_SESSION['nick']) and isset($_SESSION['habil'])){
     $descripcion="";
     $documentacion="";
     $stock="";
+    $id_recurso="";
     $id_user=$_SESSION['id_user'];
 
 if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene seteado y ejecuta el siguiente codigo
@@ -87,7 +88,7 @@ $a="";
 
           
 
-if (isset($_POST['submit']) && !empty($_POST['id_recurso'])) // si presiono el boton ingresar
+if (isset($_POST['submit']) && !is_numeric($_POST['id_recurso'])) // si presiono el boton ingresar
 {
     $NuevoRecurso=new recurso();
     $NuevoRecurso->setnombre($_POST['nombre']);
@@ -99,7 +100,7 @@ if (isset($_POST['submit']) && !empty($_POST['id_recurso'])) // si presiono el b
 
     print $NuevoRecurso->insertrecursos(); // inserta y muestra el resultado
 }
-if (isset($_POST['submit']) && empty($_POST['id_recurso'])) // si presiono el boton y es modificar
+if (isset($_POST['submit']) && is_numeric($_POST['id_recurso'])) // si presiono el boton y es modificar
 {
       
     $NuevoRecurso=new recurso();

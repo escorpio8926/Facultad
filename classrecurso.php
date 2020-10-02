@@ -24,6 +24,7 @@
       $this->documentacion=$row['documentacion'];
       $this->stock=$row['stock'];
       $this->id_user=$row['id_user'];
+      $this->id_recurso=$row['id_recurso'];
     }
   }
 	function getrecursos($val1,$val2) // este metodo podria no estar en esta clase, se incluye para simplificar el codigo, lo que hace es traer todas las nombress
@@ -92,7 +93,7 @@
    $qverifica="select * from recursos_beneficios where nombre='$this->nombre'";                    
    $obj_nombres->consulta($qverifica);
    if($obj_nombres->num_rows()<>0){       
-    echo "hola";
+
 
      $query="update recursos_beneficios set descripcion='$this->descripcion', "
      . "stock='$this->stock', "
