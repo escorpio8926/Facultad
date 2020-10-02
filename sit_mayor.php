@@ -2,6 +2,7 @@
 include 'cabecera.php';
 include 'menu.php';
 include './classsit_may.php';
+include './classfin.php';
 
 if(isset($_SESSION['nick']) and isset($_SESSION['habil'])){
  $id_my=""; 
@@ -463,6 +464,165 @@ else
   print '<img src="./imagenes/accesoDenegado.png" style=" position: absolute; top: 40%; left: 44%;">';       
 }
 ?>
+
+<!-- finalizacion-->
+<?php
+if(isset($_SESSION['nick']) and isset($_SESSION['habil'])){
+    $id_fin=""; 
+    $final="";
+    $id_exp=$_GET['Id'];
+    $id_user=$_SESSION['id_user'];        
+
+if (isset($_GET['mios'])) // si la operacion es modificar, este valor viene seteado y ejecuta el siguiente codigo
+{
+
+        $Nuevofinite=new finite($_GET['mios']);// instancio la clase identificacion pasandole el nro de identificacion, de esta forma lo busca
+        $final=$Nuevofinite->getfinal();
+        $id_exp=$Nuevofinite->getid_exp();
+        $id_fin=$Nuevofinite->getid_fin();
+    }
+    ?>
+
+    <?php 
+new Conexion();
+$id_expe =$_GET['Id'];
+$quero="select * from fin where id_exp = '$id_expe'";
+$resultas = pg_query($quero); 
+if(pg_num_rows($resultas)>'0'){
+    $sasa="none";
+    $contis=1;
+  }//fin de la fila del if
+  else
+  {
+    $sasa="";
+     $contis=2;
+}
+?>
+
+    <div id="cuerpo" style="display:<?php print $sasa ?>">
+        <?php 
+        if(is_numeric($id_exp)&&is_numeric($id_fin)) 
+            {$value='Modificar';} 
+        else
+            {$value='Aceptar';}
+        ?> 
+        <form method="POST" action="sit_mayor.php?Id=<?php print $id_exp ?>" autocomplete="off"> 
+            <input type="hidden" name="id_exp" id="id_exp" value="<?php print $id_exp ?>">
+            <input type="hidden" name="id_fin" value="<?php print $id_fin ?>">
+            <input type="hidden" name="id_user" value="<?php print $id_user ?>">
+            <br></br>
+
+            <table>
+            <tr height="40">
+            <th>
+            <input type="checkbox" id="final" name="final" value="1" >
+            <label for="male">Finalizar Expediente</label><br>
+            </th>
+         <td colspan="3" id="boton"><input type="submit" name="submitares" id="submitguardaras" value ="<?php echo $value ?>" tabindex="8"></td>
+            </tr>
+            </table>
+
+         
+
+        </form>
+    </div>
+
+    <?php
+
+if (isset($_POST['submitares'])&&!is_numeric($_POST['id_fin'])) // si presiono el boton finiteresar
+{   
+    $Nuevofinite=new finite();
+    $Nuevofinite->setid_fin($_POST['id_fin']);
+    $Nuevofinite->setId_Usuario($_POST['id_user']);
+    $Nuevofinite->setfinal($_POST['final']);
+    $Nuevofinite->setid_exp($_POST['id_exp']); 
+    print  $Nuevofinite->insertfinite($_POST['final']); // inserta y muestra el resultado
+
+
+}
+?>
+
+<?php
+if (isset($_POST['submitares'])&&is_numeric($_POST['id_exp'])&&is_numeric($_POST['id_fin'])) // si presiono el boton y es modificar
+{
+    $Nuevofinite=new finite ();
+    $Nuevofinite->setid_fin($_POST['id_fin']); 
+    $Nuevofinite->setfinal($_POST['final']);
+    $Nuevofinite->setid_exp($_POST['id_exp']); 
+    print  $Nuevofinite->updatefinite ();// inserta y muestra el resultado
+}
+
+if (isset($_GET['braIdsa'])&&is_numeric($_GET['braIdsa'])) // si presiono el boton y es eliminar
+{
+    $Nuevofinite=new finite ();
+    print  $Nuevofinite->deletefinite($_GET['Id'],$_GET['braIdsa']);
+}
+
+if (isset($_GET['frId'])&&is_numeric($_GET['frId'])) // si presiono el boton y es cerrar
+{
+    $Nuevofinite=new finite ();
+    print  $Nuevofinite->FinalizarFicha($_GET['frId']); // finaliza la salida y muestra el resultado
+}
+
+if (isset($_GET['crId'])&&is_numeric($_GET['crId'])) // si presiono el boton y es cerrar
+{
+    $Nuevofinite=new finite ();
+    print  $Nuevofinite->CerrarFicha($_GET['crId']); // cierra la salida y muestra el resultado
+}
+?>
+<?php 
+new Conexion();
+$id_expe =$_GET['Id'];
+$quero="select * from fin where id_exp = '$id_expe'";
+$resultas = pg_query($quero); 
+if(pg_num_rows($resultas)>'0'){
+    if($sasa==""){
+    $contis="1";
+    $sasa="none";
+    echo "<meta http-equiv='refresh' content='1.5'>";
+    }
+
+  }//fin de la fila del if
+  else
+  {
+    if($sasa=="none"){
+    $contis="2";
+    $sasa="";
+    echo "<meta http-equiv='refresh' content='1.5'>";
+}
+}
+
+?>
+<?php
+ print '<br>';
+if($contis=='1'){
+    $Nuevofinite=new finite();
+$Nuevofinite= $Nuevofinite->getfinite($_GET['Id']); // obtiene todos las salidas para despues mostrarlas
+print '<div id="grilla"><h3 style="text-align: center;">Ficha finalizada</h3> <br/><br/><table style="width:20%" border=1  >';
+
+    while ($row= pg_fetch_array($Nuevofinite)) // recorre los identificaciones uno por uno hasta el fin de la tabla
+    {
+        print '<tr>'
+
+        
+         .'<td bgcolor="#FF0000"><a style="color:#F7F7F7;" href="javascript:;" onclick= avisoo1("sit_mayor.php?Id='.$row['id_exp'].'&braIdsa='.$row['id_fin'].'");>Habilitar</a></td>' 
+            //                  .'<td><a href="javascript:;" onclick= avisoi("Salida_Mes.php?brId='.$row['id_salida_mes'].'","'.$row['mes'].'");>Borrar</a></td>'                
+            //                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$row['id_salida_mes'].'","'.$row['mes'].'");>Cerrar Salida</a></td>'                  
+        .'</tr>';
+    }
+    print '</table>';
+    print '</div>';
+
+
+}
+}
+else
+
+{
+    print '<img src="./imagenes/accesoDenegado.png" style=" position: absolute; top: 40%; left: 44%;">';       
+}
+?> 
+
 
 
 <script type="text/javascript">

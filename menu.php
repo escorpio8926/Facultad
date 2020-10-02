@@ -191,7 +191,7 @@ if (isset($_SESSION['habil']))
         $menu1=new Menu('horizontal');
                 //--------------------------------------------------------------
 
-        $opcion1=new Opcion('Cargar');
+        $opcion1=new Opcion('Ficha');
         $menu1->insertarOpciones($opcion1);
 
         $item1_1=new Items('Cargar Nueva','./nueva_ficha.php');

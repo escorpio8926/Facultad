@@ -400,6 +400,20 @@ function avisoifract(url, id_ficha){
     return true;
   }
 }
+function avisoifracto(url, id_ficha){
+  m=id_ficha;  
+  if (!confirm("A T E N C I Ó N ! ! ! \n\n\
+    Se procederá a Borrar el Recurso Nro: "+m+" ,todos los datos ingresados para la misma serán eliminados.\n\
+    Si desea continuar y eliminarlo [ACEPTAR], caso contrario [CANCELAR]. ")) 
+  {
+    return false;
+  }
+  else 
+  {
+    document.location = url;
+    return true;
+  }
+}
 function avisof(url, id_ficha){
   m=id_ficha;  
   if (!confirm("A T E N C I Ó N ! ! ! \n\n\

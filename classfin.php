@@ -160,7 +160,7 @@ class finite
    $obj_Gurpo=new Conexion();
    $query="delete from fin where id_exp=$val1 and id_fin=$val2";
 			$obj_Gurpo->consulta($query); // ejecuta la consulta para  borrar la identificacion
-			return '<div id="mensaje"><p/><h4>Se Habilito el Expediente</h4></div>'; // retorna todos los registros afectados
+			return '<div id="mensaje"><p/><h4>Se habilito la Ficha </h4></div>'; // retorna todos los registros afectados
 
    }
         function Cerrarfinite($val)	// elimina la identificacion

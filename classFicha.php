@@ -9,6 +9,7 @@
    var $dni;
    var $apellido;
    var $nombre;
+   var $email;
    var $calle;     
    var $nro;
    var $piso;
@@ -43,6 +44,7 @@
       $this->dni=$row['dni'];
       $this->apellido=$row['apellido'];
       $this->nombre=$row['nombre'];
+      $this->email=$row['email'];
       $this->calle=$row['calle'];
       $this->nro=$row['nro'];
       $this->piso=$row['piso'];
@@ -93,6 +95,8 @@
                         { return $this->apellido;}
                         function getNombre()
                         { return $this->nombre;} 
+                        function getemail()
+                        { return $this->email;}                         
                         function getcalle()
                         { return $this->calle;} 
                         function getnro()
@@ -152,6 +156,9 @@
 
                         function setNombre($val)
                         {  $this->nombre=$val;}
+
+                        function setemail($val)
+                        {  $this->email=$val;}                       
 
                         function setcalle($val)
                         {  $this->calle=$val;} 
@@ -221,6 +228,7 @@
      . "entre='$this->entre', "
      . "apellido='$this->apellido', "
      . "nombre='$this->nombre', "
+     . "email='$this->email', "
      . "calle='$this->calle', "
      . "nro='$this->nro'," 
      . "piso='$this->piso',"
@@ -298,7 +306,7 @@
    $qverifica="select * from ficha_exp where dni='$this->dni'";
    $obj_Ficha->consulta($qverifica);                       
    if($obj_Ficha->num_rows()==0){                      
-     $query="insert into ficha_exp(id_exp, fecha_ei, entre, dni, apellido, nombre, calle, nro, piso, dpto, barrio, localidad, provincia, t_ali, p_ali, meren, meren_co, muni, muni1, muni2, muni3, encuestador, telcon, padron, id_usuario ) values ('$this->id_exp','$this->fecha_ei','$this->entre', '$this->dni', '$this->apellido', '$this->nombre','$this->calle', '$this->nro', '$this->piso', '$this->dpto', '$this->barrio', '$this->localidad', '$this->provincia', '$this->t_ali','$this->p_ali','$this->meren','$this->meren_co', '$this->muni','$this->muni1','$this->muni2','$this->muni3','$this->encuestador','$this->telcon','$this->padron', '$this->id_user')";			                       
+     $query="insert into ficha_exp(id_exp, fecha_ei, entre, dni, apellido, nombre, email, calle, nro, piso, dpto, barrio, localidad, provincia, t_ali, p_ali, meren, meren_co, muni, muni1, muni2, muni3, encuestador, telcon, padron, id_usuario ) values ('$this->id_exp','$this->fecha_ei','$this->entre', '$this->dni', '$this->apellido', '$this->nombre','$this->email','$this->calle', '$this->nro', '$this->piso', '$this->dpto', '$this->barrio', '$this->localidad', '$this->provincia', '$this->t_ali','$this->p_ali','$this->meren','$this->meren_co', '$this->muni','$this->muni1','$this->muni2','$this->muni3','$this->encuestador','$this->telcon','$this->padron', '$this->id_user')";			                       
                         $obj_Ficha->consulta($query); // ejecuta la consulta para traer la identificacion
 			return '<div id="mensaje"><p/><h4>La Ficha:  '.$this->id_exp.'  se guardo con exito</h4></div>'; // retorna todos los registros afectados
     }

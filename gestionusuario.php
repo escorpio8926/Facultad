@@ -198,7 +198,23 @@ else
 }
 ?>
 
+<script>
 
+ function ponleFocus1(){
+
+ document.getElementById("nombre");
+
+
+  nombre.focus();
+  aux=nombre.value;
+  nombre.value="";
+  nombre.value=aux;
+}
+
+
+ponleFocus1();
+
+</script>
 </body>
 
 </html>
