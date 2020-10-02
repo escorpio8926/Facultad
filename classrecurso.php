@@ -92,6 +92,7 @@
    $qverifica="select * from recursos_beneficios where nombre='$this->nombre'";                    
    $obj_nombres->consulta($qverifica);
    if($obj_nombres->num_rows()<>0){       
+    echo "hola";
 
      $query="update recursos_beneficios set descripcion='$this->descripcion', "
      . "stock='$this->stock', "
