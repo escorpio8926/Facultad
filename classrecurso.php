@@ -90,7 +90,7 @@
 	function updaterecursos()	// actualiza la identificacion cargada en los atributos
 	{
    $obj_nombres=new Conexion();
-   $qverifica="select * from recursos_beneficios where nombre='$this->nombre'";                    
+   $qverifica="select * from recursos_beneficios where id_recurso='$this->id_recurso'";                    
    $obj_nombres->consulta($qverifica);
    if($obj_nombres->num_rows()<>0){       
 
@@ -100,7 +100,7 @@
 
      . "documentacion='$this->documentacion'"
    
-     . "where nombre='$this->nombre'";  
+     . "where id_recurso='$this->id_recurso'";  
                  
 			$obj_nombres->consulta($query); // ejecuta la consulta para traer la identificacion 
 			return '<div id="mensaje"><p/><h4>El Recurso :  '.$this->nombre.'  fue modificado con exito</h4></div>'; // retorna todos los registros afectados

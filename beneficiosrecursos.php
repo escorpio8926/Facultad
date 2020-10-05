@@ -109,6 +109,7 @@ if (isset($_POST['submit']) && is_numeric($_POST['id_recurso'])) // si presiono 
     $NuevoRecurso->setdocumentacion($_POST['documentacion']);
     $NuevoRecurso->setstock($_POST['stock']);
     $NuevoRecurso->setid_user($_POST['id_user']);
+    $NuevoRecurso->setid_recurso($_POST['id_recurso']);
 
     print  $NuevoRecurso->updaterecursos(); // inserta y muestra el resultado
 }
