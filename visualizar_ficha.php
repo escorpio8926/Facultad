@@ -7,10 +7,11 @@ include 'foot.php';
 if(isset($_SESSION['nick']) and isset($_SESSION['habil'])){
     $id_exp="";
     $fecha_ei="";
-     $entre="";
-    $dni="";
+    $entre="";
+    $cuil="";
     $apellido="";
     $nombre="";
+    $email="";
     $calle="";
     $nro="";
     $piso="";
@@ -18,16 +19,8 @@ if(isset($_SESSION['nick']) and isset($_SESSION['habil'])){
     $barrio="";
     $localidad="";
     $provincia="";
-    $t_ali="";
-    $p_ali="";
-    $meren="";    
-    $meren_co="";
     $padron="";
     $telcon="";
-    $muni="";
-    $muni1="";
-    $muni2="";
-    $muni3="";
     $encuestador="";
     $id_user=$_SESSION['id_user'];
 
@@ -38,9 +31,10 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
         $id_exp=$NuevaFicha->getid_exp();
         $fecha_ei=$NuevaFicha->getfecha_ei(); // setea los datos
         $entre=$NuevaFicha->getentre();
-        $dni=$NuevaFicha->getDni();
+        $cuil=$NuevaFicha->getcuil();
         $apellido=$NuevaFicha->getApellido();
         $nombre=$NuevaFicha->getNombre();
+        $email=$NuevaFicha->getemail();
         $calle=$NuevaFicha->getcalle();
         $nro=$NuevaFicha->getnro();
         $piso=$NuevaFicha->getpiso();
@@ -48,14 +42,6 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
         $barrio=$NuevaFicha->getbarrio();
         $localidad=$NuevaFicha->getlocalidad();
         $provincia=$NuevaFicha->getprovincia();
-        $t_ali=$NuevaFicha->gett_ali();
-        $p_ali=$NuevaFicha->getp_ali();
-        $meren=$NuevaFicha->getmeren();
-        $meren_co=$NuevaFicha->getmeren_co();
-        $muni=$NuevaFicha->getmuni();
-        $muni1=$NuevaFicha->getmuni1();
-        $muni2=$NuevaFicha->getmuni2();
-        $muni3=$NuevaFicha->getmuni3();
         $padron=$NuevaFicha->getpadron();
         $telcon=$NuevaFicha->gettelcon();
         $encuestador=$NuevaFicha->getencuestador();
@@ -77,7 +63,7 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
 
 }
 ?>
-<form method="POST" action="nueva_ficha.php" autocomplete="off">
+<form method="POST" action="visualizar_ficha.php" autocomplete="off">
 
     <input type="hidden" name="id_exp" value="<?php print $id_exp ?>">
     <input type="hidden" name="id_user" value="<?php print $id_user ?>">
@@ -94,11 +80,11 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
     </tr>
     <tr>
         <th></th>
-        <th style="text-align: :justify">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fecha&nbsp;&nbsp; <input type="date" name="fecha_ei" id="fecha_ei" value = "<?php print $fecha_ei ?>" oninput="dip()" onkeydown="return tab_btn(event,getElementById('fecha_ei'),getElementById('apellido'),getElementById('dni'))" class="fecha" tabindex="1" required disabled></th>
+        <th style="text-align: :justify">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fecha&nbsp;&nbsp; <input type="date" name="fecha_ei" id="fecha_ei" value = "<?php print $fecha_ei ?>" oninput="dip()" onkeydown="return tab_btn(event,getElementById('fecha_ei'),getElementById('apellido'),getElementById('cuil'))" class="fecha" tabindex="1" required disabled></th>
     </tr>
      <tr>
         <th></th>
-        <th style="text-align: :justify">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Entrevista&nbsp;&nbsp; <input type="text" maxlength="1" name="entre" id="entre" class="oby" value = "<?php print $entre ?>" oninput="dipis()" onkeydown="return tab_btn(event,getElementById('entre'),getElementById('apellido'),getElementById('dni'))"   readonly ></th>
+        <th style="text-align: :justify">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Entrevista&nbsp;&nbsp; <input type="text" maxlength="1" name="entre" id="entre" class="oby" value = "<?php print $entre ?>" oninput="dipis()" onkeydown="return tab_btn(event,getElementById('entre'),getElementById('apellido'),getElementById('cuil'))"   readonly ></th>
     </tr>
     <tr><th><p> </p></th></tr>
     <tr>
@@ -108,7 +94,7 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
     <tr>
 
         <th colspan="1"  style="text-align: center;">
-            D.N.I.: <input type="number" style="width:30%" class="dni" min="500000" max="99999999" name="dni" id="dni"  value = "<?php print $dni ?>" tabindex="2" onkeypress="return check(event,value)" oninput="checkLength2()" <?php print $s ?> readonly>
+            CUIL: <input type="number" style="width:30%" class="cuil" min="500000" max="99999999" name="cuil" id="cuil"  value = "<?php print $cuil ?>" tabindex="2" onkeypress="return check(event,value)" oninput="checkLength2()" <?php print $s ?> readonly>
         </th>
 
     </tr>
@@ -184,66 +170,8 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
 
     </tr>
     <tr><th><p> </p></th></tr>
-    <tr>
-        <th colspan="2" style="border-top-style: solid;border-bottom-style: solid;"><h3>PROGRAMAS ALIMENTARIOS</h3></th>
-    </tr>
-    <tr><th><p> </p></th></tr>
-    <tr>
-        <th colspan="2">
-            <b> ¿Algún integrante de este hogar recibe tarjeta alimentaria?</b>
-            <input type="number"  value="<?php print $t_ali ?>" name="t_ali" class="sin" id="t_ali" min="1" max="2" style="width:13%" placeholder="SI(1) NO(2)"  onkeypress="return check(event,value)" oninput="checkLength4()" onkeydown="return tab_btn1(event,getElementById('t_ali'),getElementById('p_ali'))" tabindex="14" required readonly>
+  
 
-        </th> 
-    </tr>
-    <tr>
-        <th colspan="2"  style="text-align: center;">
-            <b>¿Algún integrante de este hogar recibe otro programa alimentario?</b>
-            <input type="number" value="<?php print $p_ali ?>" name="p_ali" class="sin" id="p_ali" min="1" max="2" style="width:13%" placeholder="SI(1) NO(2)" onkeypress="return check(event,value)" oninput="checkLength5()" onkeydown="return tab_btn1(event,getElementById('p_ali'),getElementById('meren'))" tabindex="15" required readonly>
-
-
-        </th> 
-    </tr>
-    <tr>
-        <th colspan="2"  style="text-align: center;">
-            <b> ¿Algún integrante de este hogar asiste a un comedor o merendero comunitario? </b>
-            <input type="number" name="meren" value="<?php print $meren ?>" class="sin" id="meren" min="1" max="2" style="width:13%" placeholder="SI(1) NO(2)"onkeypress="return check(event,value)" oninput="checkLength6()" onkeydown="return tab_btn3(event,getElementById('meren'),getElementById('meren_co'),getElementById('muni'))" tabindex="16" required  readonly><br>
-            <input type="text" style="display:none;" class="texto" name="meren_co" id="meren_co" value="<?php print $meren_co ?>" tabindex="17" placeholder="¿Cuál?" onkeydown="return tab_btn1(event,getElementById('meren_co'),getElementById('muni'))">
-        </th> 
-    </tr>
-
-    <tr><th><p> </p></th></tr>
-    <tr>
-        <th colspan="2" style="border-top-style: solid;border-bottom-style: solid;"><h3>PROGRAMAS MUNICIPALES</h3></th>
-    </tr>
-
-    <tr>
-        <th colspan="2"  style="text-align: center;">
-            <b>¿Algún integrante de este hogar recibe el programa Taficeñitos?</b>
-            <input type="number" value="<?php print $muni ?>" name="muni" class="sin" id="muni" min="1" max="2" style="width:13%" placeholder="SI(1) NO(2)"  onkeypress="return check(event,value)" oninput="checkLength7()" onkeydown="return tab_btn1(event,getElementById('muni'),getElementById('muni1'))" tabindex="18" required readonly><br>
-        </th> 
-    </tr>
-    
-        <tr>
-        <th colspan="2"  style="text-align: center;">
-            <b>¿Algún integrante de este hogar recibe el programa Vivir Mejor?</b>
-            <input type="number" value="<?php print $muni1 ?>" name="muni1" class="sin" id="muni1" min="1" max="2" style="width:13%" placeholder="SI(1) NO(2)"  onkeypress="return check(event,value)" oninput="checkLength7a()" onkeydown="return tab_btn1(event,getElementById('muni1'),getElementById('muni2'))" tabindex="19" required readonly><br>
-        </th> 
-    </tr>
-        <tr>
-        <th colspan="2"  style="text-align: center;">
-            <b>¿Algún integrante de este hogar recibe el programa Inclusión Social con Ingresos?</b>
-            <input type="number" value="<?php print $muni2 ?>" name="muni2" class="sin" id="muni2" min="1" max="2" style="width:13%" placeholder="SI(1) NO(2)"  onkeypress="return check(event,value)" oninput="checkLength7b()" onkeydown="return tab_btn1(event,getElementById('muni2'),getElementById('muni3'))" tabindex="20" required readonly><br>
-        </th> 
-    </tr>
-        <tr>
-        <th colspan="2"  style="text-align: center;">
-            <b>¿Algún integrante de este hogar recibe el programa Acompañamiento integral al adulto mayor?</b>
-            <input type="number" value="<?php print $muni3 ?>" name="muni3" class="sin" id="muni3" min="1" max="2" style="width:13%" placeholder="SI(1) NO(2)"  onkeypress="return check(event,value)" oninput="checkLength7c()" onkeydown="return tab_btn1(event,getElementById('muni3'),getElementById('encuestador'))" tabindex="21" required readonly><br>
-        </th> 
-    </tr>
-
-
-  <tr><th><p> </p></th></tr>
     <tr>
         <th colspan="2" style="border-top-style: solid;border-bottom-style: solid;"><h3>RELEVADOR DE DATOS</h3></th>
     </tr>
@@ -251,7 +179,7 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
         <tr>
         <th colspan="2"  style="text-align: center;">
             <b>Apellido y nombre</b>
-           <input type="text" style="width:50%"  class="texto" name="encuestador" id="encuestador" value="<?php print $encuestador ?>" tabindex="22" onkeypress="return check(event,value)" oninput="checkLength7d()" onkeydown="return tab_btn1(event,getElementById('encuestador'),getElementById('submitguardar'))" required readonly>
+           <input type="text" style="width:50%"  class="texto" name="encuestador" id="encuestador" value="<?php print $encuestador ?>" tabindex="16" onkeypress="return check(event,value)" oninput="checkLength7d()" onkeydown="return tab_btn1fin(event,getElementById('encuestador'),getElementById('submitguardar'),getElementById('nro'),getElementById('piso'),getElementById('dpto'))" readonly>
 
 
         </th> 
@@ -262,7 +190,7 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
         
         <td colspan="2" id="boton">
              <input type="button" onclick="redirect1()" style="width:13%;margin-left:0%;" value="Cancelar" <?php print $disas ?>>
-             <input type="submit" style="text-align:center;width:13% " name="submit" id="submitguardar" value ="<?php echo $value ?>" tabindex="23" readonly disabled></td>
+             <input type="submit" style="text-align:center;width:13% " name="submit" id="submitguardar" value ="<?php echo $value ?>" tabindex="17"  disabled   ></td>
     </tr>
 
 </table>
@@ -285,12 +213,12 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
     if ($_SESSION['habil']>1) {     // nivel de permiso 2 o mayor
     $busqueda =$_GET['busqueda'];    //paso el parametro busqueda
     if (empty($busqueda))             // si busqueda esta vacia
-    {echo "<strong> <p>Ingrese Apellido/DNI/Numero de Ficha</p></strong>";}
+    {echo "<strong> <p>Ingrese Apellido/cuil/Numero de Ficha</p></strong>";}
     else{
         new conexion();
         if(is_numeric($busqueda)){               //si el dato ingresado es numerico
             $query="SELECT * from ficha_exp where (
-            dni = '$busqueda' OR
+            cuil = '$busqueda' OR
             id_exp = '$busqueda'
         )";
     }
@@ -320,7 +248,7 @@ if($total = pg_num_rows($result)){
         .'<td  height="40">'.$resultados['id_exp'].'</td>'
         .'<td>'.strftime("%d-%m-%Y", strtotime($resultados['fecha_ei'])) .'</td>'
         .'<td>'.$resultados['apellido'].', '.$resultados['nombre'].'</td>'
-        .'<td>'.$resultados['dni'].'</td>'
+        .'<td>'.$resultados['cuil'].'</td>'
         .'<td colspan="3"><a href="nueva_ficha.php?mdId='.$resultados['id_exp'].'">Modificar Caratula</a></td>'
         .'<td colspan="4    "><a href="javascript:;" onclick= avisoi("nueva_ficha.php?brId='.$resultados['id_exp'].'","'.$resultados['id_exp'].'");>Eliminar Ficha</a></td>'
 
@@ -333,7 +261,7 @@ if($total = pg_num_rows($result)){
         .'<td height="40">'.$resultados['id_exp'].'</td>'
         .'<td>'.strftime("%d-%m-%Y", strtotime($resultados['fecha_ei'])) .'</td>'
         .'<td>'.$resultados['apellido'].', '.$resultados['nombre'].'</td>'
-        .'<td>'.$resultados['dni'].'</td>'
+        .'<td>'.$resultados['cuil'].'</td>'
         .'<td><a href="nueva_ficha.php?mdId='.$resultados['id_exp'].'">Modificar Caratula</a></td>'
         .'<td><a href="hogar_y_vivienda.php?Id='.$resultados['id_exp'].'">Características del Hogar y Vivienda</a></td>'
         .'<td><a href="grupo_hogar.php?Id='.$resultados['id_exp'].'">Características de los Miembros del Hogar</a></td>'
@@ -359,12 +287,12 @@ else{ // si es usuario nivel de permiso 1
          $s=$_SESSION['id_user']; // paso el parametro de usuario
      $busqueda =$_GET['busqueda'];    //paso el parametro busqueda
     if (empty($busqueda))             // si busqueda esta vacia
-    {echo "Ingrese Apellido/DNI/Numero de Ficha";}
+    {echo "Ingrese Apellido/cuil/Numero de Ficha";}
     else{
        new conexion();
         if(is_numeric($busqueda)){             //si el dato ingresado es numerico
             $query1="SELECT * from ficha_pea_titular where
-            dni = '$busqueda' OR
+            cuil = '$busqueda' OR
             id_exp = '$busqueda'
             AND  id_usuario = '$s'
             ";
@@ -398,7 +326,7 @@ if($total1 = pg_num_rows($result1)){
         .'<td  height="40">'.$resultados['id_exp'].'</td>'
         .'<td>'.strftime("%d-%m-%Y", strtotime($resultados['fecha_ei'])) .'</td>'
         .'<td>'.$resultados['apellido'].', '.$resultados['nombre'].'</td>'
-        .'<td>'.$resultados['dni'].'</td>'
+        .'<td>'.$resultados['cuil'].'</td>'
         .'<td colspan="3"><a href="nueva_ficha.php?mdId='.$resultados['id_exp'].'">Modificar Caratula</a></td>'
         .'<td colspan="4    "><a href="javascript:;" onclick= avisoi("nueva_ficha.php?brId='.$resultados['id_exp'].'","'.$resultados['id_exp'].'");>Eliminar Ficha</a></td>'
 
@@ -411,7 +339,7 @@ if($total1 = pg_num_rows($result1)){
         .'<td height="40">'.$resultados['id_exp'].'</td>'
         .'<td>'.strftime("%d-%m-%Y", strtotime($resultados['fecha_ei'])) .'</td>'
         .'<td>'.$resultados['apellido'].', '.$resultados['nombre'].'</td>'
-        .'<td>'.$resultados['dni'].'</td>'
+        .'<td>'.$resultados['cuil'].'</td>'
         .'<td><a href="nueva_ficha.php?mdId='.$resultados['id_exp'].'">Modificar Caratula</a></td>'
         .'<td><a href="hogar_y_vivienda.php?Id='.$resultados['id_exp'].'">Características del Hogar y Vivienda</a></td>'
         .'<td><a href="grupo_hogar.php?Id='.$resultados['id_exp'].'">Características de los Miembros del Hogar</a></td>'
@@ -451,9 +379,10 @@ if (isset($_POST['submit'])&&!is_numeric($_POST['id_exp'])) // si presiono el bo
     $NuevaFicha->setid_exp($_POST['nro_exp']);
     $NuevaFicha->setfecha_ei($_POST['fecha_ei']); // setea los datos
     $NuevaFicha->setentre($_POST['entre']);
-    $NuevaFicha->setDni($_POST['dni']);
+    $NuevaFicha->setcuil($_POST['cuil']);
     $NuevaFicha->setApellido(strtoupper($_POST['apellido']));
     $NuevaFicha->setNombre(strtoupper($_POST['nombre']));
+    $NuevaFicha->setemail($_POST['email']);
     $NuevaFicha->setcalle(strtoupper($_POST['calle']));
     $NuevaFicha->setnro($_POST['nro']);
     $NuevaFicha->setpiso($_POST['piso']);
@@ -461,14 +390,6 @@ if (isset($_POST['submit'])&&!is_numeric($_POST['id_exp'])) // si presiono el bo
     $NuevaFicha->setbarrio(strtoupper($_POST['barrio']));
     $NuevaFicha->setlocalidad(strtoupper($_POST['localidad']));
     $NuevaFicha->setprovincia(strtoupper($_POST['provincia']));
-    $NuevaFicha->sett_ali($_POST['t_ali']);
-    $NuevaFicha->setp_ali($_POST['p_ali']);
-    $NuevaFicha->setmeren($_POST['meren']);
-    $NuevaFicha->setmeren_co(strtoupper($_POST['meren_co']));
-    $NuevaFicha->setmuni($_POST['muni']);
-    $NuevaFicha->setmuni1($_POST['muni1']);
-    $NuevaFicha->setmuni2($_POST['muni2']);
-    $NuevaFicha->setmuni3($_POST['muni3']);
     $NuevaFicha->setpadron($_POST['padron']);
     $NuevaFicha->settelcon($_POST['telcon']);
     $NuevaFicha->setencuestador(strtoupper($_POST['encuestador']));
@@ -482,9 +403,10 @@ if (isset($_POST['submit'])&&is_numeric($_POST['id_exp'])) // si presiono el bot
     $NuevaFicha->setid_exp($_POST['nro_exp']);
     $NuevaFicha->setfecha_ei($_POST['fecha_ei']); // setea los datos
     $NuevaFicha->setentre($_POST['entre']);
-    $NuevaFicha->setDni($_POST['dni']);
+    $NuevaFicha->setcuil($_POST['cuil']);
     $NuevaFicha->setApellido(strtoupper($_POST['apellido']));
     $NuevaFicha->setNombre(strtoupper($_POST['nombre']));
+    $NuevaFicha->setemail($_POST['email']);
     $NuevaFicha->setcalle(strtoupper($_POST['calle']));
     $NuevaFicha->setnro($_POST['nro']);
     $NuevaFicha->setpiso($_POST['piso']);
@@ -492,14 +414,6 @@ if (isset($_POST['submit'])&&is_numeric($_POST['id_exp'])) // si presiono el bot
     $NuevaFicha->setbarrio(strtoupper($_POST['barrio']));
     $NuevaFicha->setlocalidad(strtoupper($_POST['localidad']));
     $NuevaFicha->setprovincia(strtoupper($_POST['provincia']));
-    $NuevaFicha->sett_ali($_POST['t_ali']);
-    $NuevaFicha->setp_ali($_POST['p_ali']);
-    $NuevaFicha->setmeren($_POST['meren']);
-    $NuevaFicha->setmeren_co(strtoupper($_POST['meren_co']));
-    $NuevaFicha->setmuni($_POST['muni']);
-    $NuevaFicha->setmuni1($_POST['muni1']);
-    $NuevaFicha->setmuni2($_POST['muni2']);
-    $NuevaFicha->setmuni3($_POST['muni3']);
     $NuevaFicha->setpadron($_POST['padron']);
     $NuevaFicha->settelcon($_POST['telcon']);
     $NuevaFicha->setencuestador(strtoupper($_POST['encuestador']));
@@ -524,6 +438,7 @@ if (isset($_GET['crId'])&&is_numeric($_GET['crId'])) // si presiono el boton y e
     $NuevaFicha=new Ficha();
     print  $NuevaFicha->CerrarFicha($_GET['crId']); // cierra la salida y muestra el resultado
 }
+
     new Conexion();
         $identi=$_SESSION['id_user'];
     $consulta="select * from ficha_exp where id_usuario=$identi"; 
@@ -538,7 +453,7 @@ if($_SESSION['habil']>1){
     .'<th height="50">Nº Expediente</th>
     <th>Fecha</th>
     <th>Apellido y Nombre</th>
-    <th>D.N.I.</th>
+    <th>CUIL</th>
     <th  colspan=7></th>';
 
 
@@ -551,26 +466,13 @@ new Conexion();
   $dato=pg_num_rows($result);
 
     if($dato!=1){
-    if($row['t_ali']==1 || $row['p_ali']==1 || $row['meren']==1 || $row['muni']==1  ){
-        print '<tr>'
-        .'<td  height="40">'.$row['id_exp'].'</td>'
-        .'<td>'.strftime("%d-%m-%Y", strtotime($row['fecha_ei'])) .'</td>'
-        .'<td>'.$row['apellido'].', '.$row['nombre'].'</td>'
-        .'<td>'.$row['dni'].'</td>'
-        .'<td colspan="6"><a href="visualizar_ficha.php?mdId='.$row['id_exp'].'">Visualizar Caratula</a></td>'
-     
-        .'</tr>';
 
-//                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$row['id_salida_mes'].'","'.$row['mes'].'");>Cerrar Salida</a></td>'
-        
-    }
 
-    if($row['t_ali']==2 && $row['p_ali']==2 &&$row['meren']==2 && $row['muni']==2  ){
         print '<tr>'
         .'<td height="40">'.$row['id_exp'].'</td>'
         .'<td>'.strftime("%d-%m-%Y", strtotime($row['fecha_ei'])) .'</td>'
         .'<td>'.$row['apellido'].', '.$row['nombre'].'</td>'
-        .'<td>'.$row['dni'].'</td>'
+        .'<td>'.$row['cuil'].'</td>'
         .'<td><a href="visualizar_ficha.php?mdId='.$row['id_exp'].'">Visualizar Caratula</a></td>'
         .'<td><a href="hogar_y_viviendas.php?Id='.$row['id_exp'].'">Características del Hogar y Vivienda</a></td>'
         .'<td><a href="grupo_hogares.php?Id='.$row['id_exp'].'">Características de los Miembros del Hogar</a></td>'
@@ -580,7 +482,7 @@ new Conexion();
    
 //                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$row['id_salida_mes'].'","'.$row['mes'].'");>Cerrar Salida</a></td>'
         .'</tr>';
-    }
+    
    } 
 }
 print '</table>';
@@ -596,7 +498,7 @@ else
     .'<th height="50">Nº Expediente</th>
     <th>Fecha</th>
     <th>Apellido y Nombre</th>
-    <th>D.N.I.</th>
+    <th>CUIL</th>
     <th  colspan=7></th>';
 
 while ($row=  pg_fetch_array($NuevaFicha)) // recorre los identificaciones uno por uno hasta el fin de la tabla
@@ -608,25 +510,14 @@ while ($row=  pg_fetch_array($NuevaFicha)) // recorre los identificaciones uno p
   $dato=pg_num_rows($result);
 
     if($dato!=1){
-    if($row['t_ali']==1 || $row['p_ali']==1 || $row['meren']==1 || $row['muni']==1  ){
-        print '<tr>'
-        .'<td  height="40">'.$row['id_exp'].'</td>'
-        .'<td>'.strftime("%d-%m-%Y", strtotime($row['fecha_ei'])) .'</td>'
-        .'<td>'.$row['apellido'].', '.$row['nombre'].'</td>'
-        .'<td>'.$row['dni'].'</td>'
-        .'<td colspan="3"><a href="visualizar_ficha.php?mdId='.$row['id_exp'].'">Modificar Caratula</a></td>'
-        .'<td colspan="4    "><a href="javascript:;" onclick= avisoi("nueva_ficha.php?brId='.$row['id_exp'].'","'.$row['id_exp'].'");>Eliminar Ficha</a></td>'
 
-//                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$row['id_salida_mes'].'","'.$row['mes'].'");>Cerrar Salida</a></td>'
-        .'</tr>';
-    }
 
-    if($row['t_ali']==2 && $row['p_ali']==2 &&$row['meren']==2 && $row['muni']==2  ){
+
         print '<tr>'
         .'<td height="40">'.$row['id_exp'].'</td>'
         .'<td>'.strftime("%d-%m-%Y", strtotime($row['fecha_ei'])) .'</td>'
         .'<td>'.$row['apellido'].', '.$row['nombre'].'</td>'
-        .'<td>'.$row['dni'].'</td>'
+        .'<td>'.$row['cuil'].'</td>'
         .'<td><a href="visualizar_ficha.php?mdId='.$row['id_exp'].'">Modificar Caratula</a></td>'
         .'<td><a href="hogar_y_viviendas.php?Id='.$row['id_exp'].'">Características del Hogar y Vivienda</a></td>'
         .'<td><a href="grupo_hogares.php?Id='.$row['id_exp'].'">Características de los Miembros del Hogar</a></td>'
@@ -636,7 +527,7 @@ while ($row=  pg_fetch_array($NuevaFicha)) // recorre los identificaciones uno p
         .'<td><a href="javascript:;" onclick= avisoi("nueva_ficha.php?brId='.$row['id_exp'].'","'.$row['id_exp'].'");>Eliminar Ficha</a></td>'
 //                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$row['id_salida_mes'].'","'.$row['mes'].'");>Cerrar Salida</a></td>'
         .'</tr>';
-    }
+    
    } 
 }
 print '</table>';
@@ -685,9 +576,9 @@ else
 }
 function checkLength2()
 {
-    var fieldLength = document.getElementById('dni').value.length;
+    var fieldLength = document.getElementById('cuil').value.length;
     
-        var fieldLength1 = document.getElementById('dni').value;
+        var fieldLength1 = document.getElementById('cuil').value;
         var paso = document.getElementById('apellido');
 
         if(fieldLength1 >= 1){
@@ -704,9 +595,9 @@ function checkLength2()
   }
   else
   {
-    var str = document.getElementById('dni').value;
+    var str = document.getElementById('cuil').value;
     str = str.substring(0, str.length - 1);
-    document.getElementById('dni').value = str;
+    document.getElementById('cuil').value = str;
 }
 }
 function checkLength3()
@@ -955,13 +846,13 @@ function checkLength7d()
  function dip()
   {
     
-    var dni = document.getElementById('dni');
+    var cuil = document.getElementById('cuil');
     var fecha_ei = document.getElementById('fecha_ei');
 
      if(fecha_ei.value > '0000-00-00')
-     {dni.disabled=false;}
+     {cuil.disabled=false;}
   else
-     {dni.disabled=true;}
+     {cuil.disabled=true;}
    
 }
 

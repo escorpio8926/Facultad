@@ -23,12 +23,12 @@ include 'foot.php';
     if ($_SESSION['habil']>1) {     // nivel de permiso 2 o mayor
     $busqueda =$_GET['busqueda'];    //paso el parametro busqueda
     if (empty($busqueda))             // si busqueda esta vacia
-    {echo "<strong> <p>Ingrese Apellido/DNI/Numero de Expediente</p></strong>";}
+    {echo "<strong> <p>Ingrese Apellido/cuil/Numero de Expediente</p></strong>";}
     else{
         new conexion();
         if(is_numeric($busqueda)){               //si el dato ingresado es numerico
             $query="SELECT * from ficha_exp where (
-            dni = '$busqueda' OR
+            cuil = '$busqueda' OR
             id_exp = '$busqueda'
         )";
     }
@@ -50,7 +50,7 @@ if($total = pg_num_rows($result)){
                 .'<th>Nro Expediente</th>
                 <th>Fecha Alta</th>
                 <th>Apellido y Nombre</th>
-                <th>D.N.I.</th>
+                <th>CUIL</th>
                 <th colspan=8></th>';
 
  $controlarfina=$resultados['id_exp'];
@@ -69,26 +69,13 @@ else if ( $color == 'FINALIZADO' )
     $fal ='<b style="color: red;">'; // You can replace with class=""
  
 
-    if($resultados['t_ali']==1 || $resultados['p_ali']==1 || $resultados['meren']==1 || $resultados['muni']==1  ){
-        print '<tr>'
-        .'<td  height="40">'.$resultados['id_exp'].'</td>'
-        .'<td>'.strftime("%d-%m-%Y", strtotime($resultados['fecha_ei'])) .'</td>'
-        .'<td>'.$resultados['apellido'].', '.$resultados['nombre'].'</td>'
-        .'<td>'.$resultados['dni'].'</td>'
-        .'<td colspan="3"><a href="nueva_ficha.php?mdId='.$resultados['id_exp'].'">Modificar Caratula</a></td>'
-        .'<td colspan="4    "><a href="javascript:;" onclick= avisoi("Listado.php?brId='.$resultados['id_exp'].'","'.$resultados['id_exp'].'");>Eliminar Ficha</a></td>'
-        .'<td colspan=2><b>'.'INACTIVO'.'</b></td>'
 
-//                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$resultados['id_salida_mes'].'","'.$resultados['mes'].'");>Cerrar Salida</a></td>'
-        .'</tr>';
-    }
-
-        if($resultados['t_ali']==2 && $resultados['p_ali']==2 &&$resultados['meren']==2 && $resultados['muni']==2  ){
+       
         print '<tr>'
         .'<td height="40">'.$resultados['id_exp'].'</td>'
         .'<td>'.strftime("%d-%m-%Y", strtotime($resultados['fecha_ei'])) .'</td>'
         .'<td>'.$resultados['apellido'].', '.$resultados['nombre'].'</td>'
-        .'<td>'.$resultados['dni'].'</td>'
+        .'<td>'.$resultados['cuil'].'</td>'
         .'<td><a href="nueva_ficha.php?mdId='.$resultados['id_exp'].'">Modificar Caratula</a></td>'
         .'<td><a href="hogar_y_vivienda.php?Id='.$resultados['id_exp'].'">Características del Hogar y Vivienda</a></td>'
         .'<td><a href="grupo_hogar.php?Id='.$resultados['id_exp'].'">Características de los Miembros del Hogar</a></td>'
@@ -99,7 +86,7 @@ else if ( $color == 'FINALIZADO' )
         .'<td>'.$fal.$color.$war.'</td>'
 //                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$resultados['id_salida_mes'].'","'.$resultados['mes'].'");>Cerrar Salida</a></td>'
         .'</tr>';
-    }
+    
 
                 print '</table>';
                 print '</div>';
@@ -115,12 +102,12 @@ else{ // si es usuario nivel de permiso 1
          $s=$_SESSION['id_user']; // paso el parametro de usuario
      $busqueda =$_GET['busqueda'];    //paso el parametro busqueda
     if (empty($busqueda))             // si busqueda esta vacia
-    {echo "Ingrese Apellido/DNI/Numero de Ficha";}
+    {echo "Ingrese Apellido/cuil/Numero de Ficha";}
     else{
        new conexion();
         if(is_numeric($busqueda)){             //si el dato ingresado es numerico
             $query1="SELECT * from ficha_exp where
-            dni = '$busqueda' OR
+            cuil = '$busqueda' OR
             id_exp = '$busqueda'
             AND  id_usuario = '$s'
             ";
@@ -146,7 +133,7 @@ if($total1 = pg_num_rows($result1)){
                 .'<th>Nro Expediente</th>
                 <th>Fecha Alta</th>
                 <th>Apellido y Nombre</th>
-                <th>D.N.I.</th>
+                <th>CUIL</th>
                 <th colspan=8></th>';
 
  $controlarfinas=$resultados1['id_exp'];
@@ -165,26 +152,14 @@ else if ( $color == 'FINALIZADO' )
     $fal ='<b style="color: red;">'; // You can replace with class=""
  
 
-    if($resultados1['t_ali']==1 || $resultados1['p_ali']==1 || $resultados1['meren']==1 || $resultados1['muni']==1  ){
-        print '<tr>'
-        .'<td  height="40">'.$resultados1['id_exp'].'</td>'
-        .'<td>'.strftime("%d-%m-%Y", strtotime($resultados1['fecha_ei'])) .'</td>'
-        .'<td>'.$resultados1['apellido'].', '.$resultados1['nombre'].'</td>'
-        .'<td>'.$resultados1['dni'].'</td>'
-        .'<td colspan="3"><a href="nueva_ficha.php?mdId='.$resultados1['id_exp'].'">Modificar Caratula</a></td>'
-       /* .'<td colspan="4    "><a href="javascript:;" onclick= avisoi("Listado.php?brId='.$resultados1['id_exp'].'","'.$resultados1['id_exp'].'");>Eliminar Ficha</a></td>'*/
-        .'<td colspan=2><b>'.'INACTIVO'.'</b></td>'
 
-//                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$resultados1['id_salida_mes'].'","'.$resultados1['mes'].'");>Cerrar Salida</a></td>'
-        .'</tr>';
-    }
 
-        if($resultados1['t_ali']==2 && $resultados1['p_ali']==2 &&$resultados1['meren']==2 && $resultados1['muni']==2  ){
+
         print '<tr>'
         .'<td height="40">'.$resultados1['id_exp'].'</td>'
         .'<td>'.strftime("%d-%m-%Y", strtotime($resultados1['fecha_ei'])) .'</td>'
         .'<td>'.$resultados1['apellido'].', '.$resultados1['nombre'].'</td>'
-        .'<td>'.$resultados1['dni'].'</td>'
+        .'<td>'.$resultados1['cuil'].'</td>'
         .'<td><a href="nueva_ficha.php?mdId='.$resultados1['id_exp'].'">Modificar Caratula</a></td>'
         .'<td><a href="hogar_y_vivienda.php?Id='.$resultados1['id_exp'].'">Características del Hogar y Vivienda</a></td>'
         .'<td><a href="grupo_hogar.php?Id='.$resultados1['id_exp'].'">Características de los Miembros del Hogar</a></td>'
@@ -195,7 +170,7 @@ else if ( $color == 'FINALIZADO' )
         .'<td>'.$fal.$color.$war.'</td>'
 //                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$resultados1['id_salida_mes'].'","'.$resultados1['mes'].'");>Cerrar Salida</a></td>'
         .'</tr>';
-    }
+    
 
                 print '</table>';
                 print '</div>';
@@ -230,7 +205,7 @@ if($_SESSION['habil']>1){
     .'<th height="50">Nº Expediente</th>
     <th>Fecha</th>
     <th>Apellido y Nombre</th>
-    <th>D.N.I.</th>
+    <th>CUIL</th>
     <th colspan=8></th>
 
     ';
@@ -253,20 +228,7 @@ while ($row=pg_fetch_array($NuevaFicha)) // recorre los identificaciones uno por
 
 
 
-    if($row['t_ali']==1 || $row['p_ali']==1 || $row['meren']==1 || $row['muni']==1  ){
-        print '<tr>'
-        .'<td  height="40">'.$row['id_exp'].'</td>'
-        .'<td>'.strftime("%d-%m-%Y", strtotime($row['fecha_ei'])) .'</td>'
-        .'<td>'.$row['apellido'].', '.$row['nombre'].'</td>'
-        .'<td>'.$row['dni'].'</td>'
-        .'<td colspan="3"><a href="nueva_ficha.php?mdId='.$row['id_exp'].'">Modificar Caratula</a></td>'
-        .'<td colspan="4    "><a href="javascript:;" onclick= avisoi("Listado.php?brId='.$row['id_exp'].'","'.$row['id_exp'].'");>Eliminar Ficha</a></td>'
-        .'<td colspan=2><b>'.'INACTIVO'.'</b></td>'
-    
 
-//                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$row['id_salida_mes'].'","'.$row['mes'].'");>Cerrar Salida</a></td>'
-        .'</tr>';
-    }
 
 
 
@@ -276,12 +238,12 @@ else if ( $color == 'FINALIZADO' )
     $fal ='<b style="color: red;">'; // You can replace with class=""
 
 
-    if($row['t_ali']==2 && $row['p_ali']==2 &&$row['meren']==2 && $row['muni']==2  ){
+
         print '<tr>'
         .'<td height="40">'.$row['id_exp'].'</td>'
         .'<td>'.strftime("%d-%m-%Y", strtotime($row['fecha_ei'])) .'</td>'
         .'<td>'.$row['apellido'].', '.$row['nombre'].'</td>'
-        .'<td>'.$row['dni'].'</td>'
+        .'<td>'.$row['cuil'].'</td>'
          .'<td><a href="nueva_ficha.php?mdId='.$row['id_exp'].'">Modificar Caratula</a></td>'
         .'<td><a href="hogar_y_vivienda.php?Id='.$row['id_exp'].'">Características del Hogar y Vivienda</a></td>'
         .'<td><a href="grupo_hogar.php?Id='.$row['id_exp'].'">Características de los Miembros del Hogar</a></td>'
@@ -295,7 +257,7 @@ else if ( $color == 'FINALIZADO' )
 
 //                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$row['id_salida_mes'].'","'.$row['mes'].'");>Cerrar Salida</a></td>'
         .'</tr>';
-    }
+    
     
    
 }
@@ -312,7 +274,7 @@ else
     .'<th height="50">Nº Expediente</th>
     <th>Fecha</th>
     <th>Apellido y Nombre</th>
-    <th>D.N.I.</th>
+    <th>CUIL</th>
     <th colspan=7></th>
 
     ';
@@ -335,20 +297,6 @@ while ($row=pg_fetch_array($NuevaFicha)) // recorre los identificaciones uno por
 
 
 
-    if($row['t_ali']==1 || $row['p_ali']==1 || $row['meren']==1 || $row['muni']==1  ){
-        print '<tr>'
-        .'<td  height="40">'.$row['id_exp'].'</td>'
-        .'<td>'.strftime("%d-%m-%Y", strtotime($row['fecha_ei'])) .'</td>'
-        .'<td>'.$row['apellido'].', '.$row['nombre'].'</td>'
-        .'<td>'.$row['dni'].'</td>'
-        .'<td colspan="5"><a href="nueva_ficha.php?mdId='.$row['id_exp'].'">Modificar Caratula</a></td>'
-       /* .'<td colspan="4    "><a href="javascript:;" onclick= avisoi("Listado.php?brId='.$row['id_exp'].'","'.$row['id_exp'].'");>Eliminar Ficha</a></td>'*/
-        .'<td><b>'.'INACTIVO'.'</b></td>'
-    
-
-//                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$row['id_salida_mes'].'","'.$row['mes'].'");>Cerrar Salida</a></td>'
-        .'</tr>';
-    }
 
 
 
@@ -358,12 +306,12 @@ else if ( $color == 'FINALIZADO' )
     $fal ='<b style="color: red;">'; // You can replace with class=""
 
 
-    if($row['t_ali']==2 && $row['p_ali']==2 &&$row['meren']==2 && $row['muni']==2  ){
+
         print '<tr>'
         .'<td height="40">'.$row['id_exp'].'</td>'
         .'<td>'.strftime("%d-%m-%Y", strtotime($row['fecha_ei'])) .'</td>'
         .'<td>'.$row['apellido'].', '.$row['nombre'].'</td>'
-        .'<td>'.$row['dni'].'</td>'
+        .'<td>'.$row['cuil'].'</td>'
          .'<td><a href="nueva_ficha.php?mdId='.$row['id_exp'].'">Modificar Caratula</a></td>'
         .'<td><a href="hogar_y_vivienda.php?Id='.$row['id_exp'].'">Características del Hogar y Vivienda</a></td>'
         .'<td><a href="grupo_hogar.php?Id='.$row['id_exp'].'">Características de los Miembros del Hogar</a></td>'
@@ -377,7 +325,7 @@ else if ( $color == 'FINALIZADO' )
 
 //                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$row['id_salida_mes'].'","'.$row['mes'].'");>Cerrar Salida</a></td>'
         .'</tr>';
-    }
+    
     
    
 }

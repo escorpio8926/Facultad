@@ -169,9 +169,9 @@ if (isset($_GET['mtri'])) // si la operacion es modificar, este valor viene sete
             
             <td colspan="1"><br><input type="number" class="sinoga" style="width: 75%;" placeholder="V(1) - M(2) -NB(3)" name="sexo" id="sexo" value="<?php print $sexo ?>" onkeypress="return check(event,value)" oninput="checkLength1()" onkeydown="return tab_btn(event,getElementById('sexo'),getElementById('fecha_nac'))" onfocus="god1()"  required <?php print $cv2 ?> >
             
-            <td colspan="1"><br><input type="date" style="width: 80%;" name="fecha_nac" id="fecha_nac" value="<?php print $fecha_nac ?>"required <?php print $cv2 ?> <?php print $cv1 ?> oninput="dip()" onkeydown="return tab_btn1(event,getElementById('fecha_nac'),getElementById('anios'))"></td>
+             <td colspan="1"><br><input type="date" style="width: 80%;" name="fecha_nac" id="fecha_nac" value="<?php print $fecha_nac ?>"required <?php print $cv2 ?> <?php print $cv1 ?> oninput="dip()" onkeydown="return tab_btn1(event,getElementById('fecha_nac'),getElementById('sit_conyu'))"></td>
 
-            <td colspan="1"> <br> <input type="number" style="width: 80%;" name="anios" id="anios" min="0" max="120"  value="<?php print $anios ?>" required onkeypress="return check(event,value)" oninput="checkLength3()" onkeydown="return tab_btn(event,getElementById('anios'),getElementById('sit_conyu'))"  <?php print $cv2 ?> <?php print $cv1 ?>></td>
+           <td colspan="1" > <br> <input type="number" style="width: 80%;" name="anios" id="anios" min="0" max="120"  value="<?php print $anios ?>" required  readonly></td>
             <td colspan="1">
               <br><input type="number" style="width: 80%;" id="sit_conyu" name="sit_conyu" value="<?php print $sit_conyu ?>" required onkeypress="return check(event,value)" min="1" max="5"  oninput="checkLength4()" onkeydown="return tab_btn(event,getElementById('sit_conyu'),getElementById('cober_medic'))" class="sinocin" <?php print $cv2 ?> <?php print $cv1 ?>>
             </td>
@@ -1297,26 +1297,99 @@ function tab_btn(event,p1,p2)
 
   }
 
+
+  function calcularEdad(fecha) {
+        // Si la fecha es correcta, calculamos la edad
+
+        if (typeof fecha != "string" && fecha && esNumero(fecha.getTime())) {
+            fecha = formatDate(fecha, "yyyy-MM-dd");
+        }
+
+        var values = fecha.split("-");
+        var dia = values[2];
+        var mes = values[1];
+        var ano = values[0];
+
+        // cogemos los valores actuales
+        var fecha_hoy = new Date();
+        var ahora_ano = fecha_hoy.getYear();
+        var ahora_mes = fecha_hoy.getMonth() + 1;
+        var ahora_dia = fecha_hoy.getDate();
+
+        // realizamos el calculo
+        var edad = (ahora_ano + 1900) - ano;
+        if (ahora_mes < mes) {
+            edad--;
+        }
+        if ((mes == ahora_mes) && (ahora_dia < dia)) {
+            edad--;
+        }
+        if (edad > 1900) {
+            edad -= 1900;
+        }
+
+        // calculamos los meses
+        var meses = 0;
+
+        if (ahora_mes > mes && dia > ahora_dia)
+            meses = ahora_mes - mes - 1;
+        else if (ahora_mes > mes)
+            meses = ahora_mes - mes
+        if (ahora_mes < mes && dia < ahora_dia)
+            meses = 12 - (mes - ahora_mes);
+        else if (ahora_mes < mes)
+            meses = 12 - (mes - ahora_mes + 1);
+        if (ahora_mes == mes && dia > ahora_dia)
+            meses = 11;
+
+        // calculamos los dias
+        var dias = 0;
+        if (ahora_dia > dia)
+            dias = ahora_dia - dia;
+        if (ahora_dia < dia) {
+            ultimoDiaMes = new Date(ahora_ano, ahora_mes - 1, 0);
+            dias = ultimoDiaMes.getDate() - (dia - ahora_dia);
+        }
+
+        return edad;
+    }
+
+    function esNumero(strNumber) {
+    if (strNumber == null) return false;
+    if (strNumber == undefined) return false;
+    if (typeof strNumber === "number" && !isNaN(strNumber)) return true;
+    if (strNumber == "") return false;
+    if (strNumber === "") return false;
+    var psInt, psFloat;
+    psInt = parseInt(strNumber);
+    psFloat = parseFloat(strNumber);
+    return !isNaN(strNumber) && !isNaN(psFloat);
+}
+
   function tab_btn1(event,p1,p2)
 {
   var x1=p1 // fecha_nac
-  var x2=p2; // anios
+  var x4=p2
+
   //var x3=new date("2000","03","01");
 
   var t = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
-  if (t == 9 && x1.value > "0000-00-00" ) 
+  if ((t == 9 || t== 13) && x1.value > "0000-00-00" ) 
   {
-  x2.disabled=false;
-  x2.focus();
-  aux=x2.value;
-  x2.value="";
-  x2.value=aux;
+var x3 = document.getElementById('anios');
+var x2=calcularEdad(x1.value);
+x3.value= x2;
+  
+  x4.disabled=false;
+  x4.focus();
+  aux=x4.value;
+  x4.value="";
+  x4.value=aux;
   return false;
   }  
     return true;
 
   }
-
   function tab_btnf(event,p1,p2)
 {
   var x1=p1;

@@ -6,7 +6,7 @@
    var $id_exp;
    var $fecha_ei;
    var $entre;
-   var $dni;
+   var $cuil;
    var $apellido;
    var $nombre;
    var $email;
@@ -17,17 +17,12 @@
    var $barrio;
    var $localidad;
    var $provincia;
-   var $t_ali;
-   var $p_ali;
-   var $meren;
-   var $meren_co;
-   var $muni;
+
+
    var $id_usuario;
    var $padron;
    var $telcon;
-   var $muni1;
-   var $muni2;
-   var $muni3;
+
    var $encuestador;
 
 
@@ -41,7 +36,7 @@
       $this->id_exp=$row['id_exp'];   
       $this->fecha_ei=$row['fecha_ei'];
       $this->entre=$row['entre'];
-      $this->dni=$row['dni'];
+      $this->cuil=$row['cuil'];
       $this->apellido=$row['apellido'];
       $this->nombre=$row['nombre'];
       $this->email=$row['email'];
@@ -52,14 +47,6 @@
       $this->barrio=$row['barrio'];
       $this->localidad=$row['localidad'];
       $this->provincia=$row['provincia'];
-      $this->t_ali=$row['t_ali'];
-      $this->p_ali=$row['p_ali'];
-      $this->meren=$row['meren'];
-      $this->meren_co=$row['meren_co'];
-      $this->muni=$row['muni'];
-      $this->muni1=$row['muni1'];
-      $this->muni2=$row['muni2'];
-      $this->muni3=$row['muni3'];
       $this->padron=$row['padron'];
       $this->encuestador=$row['encuestador'];
       $this->telcon=$row['telcon'];
@@ -89,8 +76,8 @@
                         { return $this->fecha_ei;}
                         function getentre()
                         { return $this->entre;}     
-                        function getDni()
-                        { return $this->dni;}
+                        function getcuil()
+                        { return $this->cuil;}
                         function getApellido()
                         { return $this->apellido;}
                         function getNombre()
@@ -148,8 +135,8 @@
                          function setentre($val)
                         {  $this->entre=$val;} 
 
-                        function setDni($val)
-                        {  $this->dni=$val;}  
+                        function setcuil($val)
+                        {  $this->cuil=$val;}  
 
                         function setApellido($val)
                         {  $this->apellido=$val;}
@@ -220,7 +207,7 @@
 	function updateFicha()	// actualiza la identificacion cargada en los atributos
 	{
    $obj_Ficha=new Conexion();
-   $qverifica="select * from ficha_exp where dni='$this->dni'";                                  
+   $qverifica="select * from ficha_exp where cuil='$this->cuil'";                                  
    $obj_Ficha->consulta($qverifica);
    if($obj_Ficha->num_rows()<>0){                          
      $query="update ficha_exp set id_exp='$this->id_exp', "
@@ -236,19 +223,11 @@
      . "barrio='$this->barrio', "
      . "localidad='$this->localidad', "
      . "provincia='$this->provincia', "
-     . "t_ali='$this->t_ali', "
-     . "muni='$this->muni', "
-     . "muni1='$this->muni1', "
-     . "muni2='$this->muni2', "
-     . "muni3='$this->muni3', "
      . "encuestador='$this->encuestador', "
      . "telcon='$this->telcon', "
      . "padron='$this->padron', "
-     . "meren='$this->meren', "
-     . "meren_co='$this->meren_co', "
-     . "p_ali='$this->p_ali', "
      . "id_usuario='$this->id_user'"
-     . "where dni='$this->dni'";                       
+     . "where cuil='$this->cuil'";                       
 			$obj_Ficha->consulta($query); // ejecuta la consulta para traer la identificacion 
 			return '<div id="mensaje"><p/><h4>La ficha número:  '.$this->id_exp.'  fue modificada con exito</h4></div>'; // retorna todos los registros afectados
     }
@@ -303,15 +282,15 @@
    $qverifica1="select * from ficha_exp where id_exp=$this->id_exp";
    $obj_Ficha->consulta($qverifica1); 
   if($obj_Ficha->num_rows()==0){                
-   $qverifica="select * from ficha_exp where dni='$this->dni'";
+   $qverifica="select * from ficha_exp where cuil='$this->cuil'";
    $obj_Ficha->consulta($qverifica);                       
    if($obj_Ficha->num_rows()==0){                      
-     $query="insert into ficha_exp(id_exp, fecha_ei, entre, dni, apellido, nombre, email, calle, nro, piso, dpto, barrio, localidad, provincia, t_ali, p_ali, meren, meren_co, muni, muni1, muni2, muni3, encuestador, telcon, padron, id_usuario ) values ('$this->id_exp','$this->fecha_ei','$this->entre', '$this->dni', '$this->apellido', '$this->nombre','$this->email','$this->calle', '$this->nro', '$this->piso', '$this->dpto', '$this->barrio', '$this->localidad', '$this->provincia', '$this->t_ali','$this->p_ali','$this->meren','$this->meren_co', '$this->muni','$this->muni1','$this->muni2','$this->muni3','$this->encuestador','$this->telcon','$this->padron', '$this->id_user')";			                       
+     $query="insert into ficha_exp(id_exp, fecha_ei, entre, cuil, apellido, nombre, email, calle, nro, piso, dpto, barrio, localidad, provincia, encuestador, telcon, padron, id_usuario ) values ('$this->id_exp','$this->fecha_ei','$this->entre', '$this->cuil', '$this->apellido', '$this->nombre','$this->email','$this->calle', '$this->nro', '$this->piso', '$this->dpto', '$this->barrio', '$this->localidad', '$this->provincia','$this->encuestador','$this->telcon','$this->padron', '$this->id_user')";			                       
                         $obj_Ficha->consulta($query); // ejecuta la consulta para traer la identificacion
 			return '<div id="mensaje"><p/><h4>La Ficha:  '.$this->id_exp.'  se guardo con exito</h4></div>'; // retorna todos los registros afectados
     }
     else{
-     return '<div id="mensaje"><p/><h4>ERROR: YA FUE CARGADO EL DNI '.$this->dni.', COMPRUEBE QUE LOS DATOS SEAN CORRECTOS </h4></div>'; 
+     return '<div id="mensaje"><p/><h4>ERROR: YA FUE CARGADO EL cuil '.$this->cuil.', COMPRUEBE QUE LOS DATOS SEAN CORRECTOS </h4></div>'; 
    }
   }  
    else
