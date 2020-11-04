@@ -6,6 +6,8 @@ class drvs
   var $deriva;
   var $id_user;
   var $otro;
+  var $date;
+  var $estate;
 
 
 
@@ -17,11 +19,13 @@ class drvs
 			$obj_Gurpo=new Conexion();
 			$result=$obj_Gurpo->consulta("select * from derivacion where id_exp = '$val1' and id_drv = '$val2'"); // ejecuta la consulta para traer la ficha
       if($obj_Gurpo->num_rows()!=0){
-        $row=  drvs_fetch_array($result);
+        $row= pg_fetch_array($result);
         $this->id_exp=$row['id_exp'];
         $this->id_drv=$row['id_drv'];
         $this->deriva=$row['deriva'];
         $this->deriva=$row['otro'];
+        $this->deriva=$row['date'];
+        $this->deriva=$row['estate'];
       }
       else{
 
@@ -48,7 +52,10 @@ class drvs
                   { return $this->id_user;}
                   function getotro()
                   { return $this->otro;} 
-
+                  function getdate()
+                  { return $this->date;}
+                  function getestate()
+                  { return $this->estate;} 
 
 	// metodos que setean los valores
 
@@ -67,21 +74,23 @@ class drvs
                   function setotro($val)
                   {  $this->otro=$val;}
 
-	function updatedrvs()	// actualiza la identificacion cargada en los atributos
+                  function setdate($val)
+                  {  $this->date=$val;}
+
+                  function setestate($val)
+                  {  $this->estate=$val;}
+
+	function updatedrvs($val1,$val2,$val3)	// actualiza la identificacion cargada en los atributos
 	{
    $obj_Gurpo=new Conexion();
-   $qverifica="select * from derivacion where id_drv = $this->id_drv and id_exp=$this->id_exp";
+   $qverifica="select * from derivacion where id_drv = $val1 and id_exp=$val2 ";
    $obj_Gurpo->consulta($qverifica);
    if($obj_Gurpo->num_rows()<>0){                          
-     $query="update drvss set "
-     . "apellido='$this->apellido', "
-     . "nombre='$this->nombre', "
-     . "edad='$this->edad', "
-     . "parentesco='$this->parentesco',  "
-     . "observacion='$this->observacion'"
-     . "where id_drv = '$this->id_drv' and id_exp='$this->id_exp'";
+     $query="update derivacion set "
+     . "estate=$val3"
+     . "where id_drv = $val1 and id_exp= $val2   ";
 			$obj_Gurpo->consulta($query); // ejecuta la consulta para traer la identificacion 
-			return '<div id="mensaje"><p/><h4>Se Modifico:  '.$obj_Gurpo->getAffect().'  registro con exito</h4></div>'; // retorna todos los registros afectados
+			return '<div id="mensaje"><p/><h4>Se Registro el Expediente con exito</h4></div>'; // retorna todos los registros afectados
     }
     else{
      return '<div id="mensaje"><p/><h4>ERROR: YA ESTA DADO DE ALTA EL FORMULARIO, COMPRUEBE QUE LOS DATOS SEAN CORRECTOS </h4></div>'; 
@@ -130,16 +139,21 @@ class drvs
  }	
 	function insertdrvs($val1,$val2)	// inserta la identificacion cargada en los atributos
 	{
-
    $obj_Gurpo=new Conexion();
-   $ypf="select * from derivacion where id_exp=$this->id_exp and otro=UPPER('$val2') and deriva='$val1'  ";
+
+$querys="select stock from recursos_beneficios where id_recurso = $val1"; 
+$results =pg_query($querys);
+while ($resultados = pg_fetch_array($results)) {
+         $guardar=$resultados['stock'];        
+      }//fin del while de resultados
+
+if($guardar >= $val2 ) {
 
 
 
-
+   $ypf="select * from derivacion where id_exp=$this->id_exp and deriva='$val1'  ";
    $obj_Gurpo->consulta($ypf);
    if($obj_Gurpo->num_rows()==0 ){
-echo $obj_Gurpo->num_rows();
      $obj_Gurpo=new Conexion();
      $qdrvs="select max(id_drv) from derivacion where id_exp=$this->id_exp";
      $result=$obj_Gurpo->consulta($qdrvs);
@@ -153,25 +167,47 @@ echo $obj_Gurpo->num_rows();
     $qverifica="select * from derivacion where id_drv = $this->id_drv and id_exp=$this->id_exp";
     $obj_Gurpo->consulta($qverifica);                       
     if($obj_Gurpo->num_rows()==0){
-      $query="insert into derivacion(id_drv, deriva, id_exp, otro) values ($this->id_drv, '$this->deriva', '$this->id_exp', '$this->otro')";			                                              
-                        $obj_Gurpo->consulta($query); // ejecuta la consulta para traer la identificacion
-			return '<div id="mensaje"><p/><h4>La derivación se guardo con exito</h4></div>'; // retorna todos los registros afectados
+      $query="insert into derivacion(id_drv, deriva, id_exp, otro, date, estate) values ($this->id_drv, '$this->deriva', '$this->id_exp', '$this->otro', '$this->date', '$this->estate')";	
+
+                        $obj_Gurpo->consulta($query);
+$total=$guardar - $val2;
+
+$qverifica1="select stock from recursos_beneficios where id_recurso = $val1";
+$obj_Gurpo->consulta($qverifica1);
+if($obj_Gurpo->num_rows()<>0){                          
+$query1="update recursos_beneficios set stock= $total where id_recurso = $val1";
+$obj_Gurpo->consulta($query1); // ejecuta la consulta para traer la identificacion  // ejecuta la consulta para traer la identificacion
+			return '<div id="mensaje"><p/><h4>La asignación se guardo con exito</h4></div>'; // retorna todos los registros afectados
+
+      
+
+    }
+    else
+    {
+      echo "sdasds";
+    }
+
     }
     else{
-     return '<div id="mensaje"><p/><h4>ERROR: YA FUE CARGADA LA DERIVACIÓN, COMPRUEBE LA OPCIÓN ELEGIDA </h4></div>'; 
+     return '<div id="mensaje"><p/><h4>ERROR: YA FUE CARGADA LA ASIGNACIÓN, COMPRUEBE LA OPCIÓN ELEGIDA </h4></div>'; 
    }
 
  }
+
  else{
-  return '<div id="mensaje"><p/><h4>ERROR: YA FUE CARGADA LA DERIVACION, COMPRUEBE LA OPCIÓN ELEGIDA</h4></div>'; 
+  return '<div id="mensaje"><p/><h4>ERROR: YA FUE CARGADA LA ASIGNACIÓN, COMPRUEBE LA OPCIÓN ELEGIDA</h4></div>'; 
 }
+}
+else
+  { return '<div id="mensaje"><p/><h4>FUERA DE STOCK , COMPRUEBE LA OPCIÓN ELEGIDA </h4></div>'; }
 }	
+
 	function deletedrvs($val1,$val2)	// elimina la identificacion
 	{ //select * from hogar where id_exp=$this->id_exp and id_numero = $this->id_numero
    $obj_Gurpo=new Conexion();
    $query="delete from derivacion where id_exp=$val1 and id_drv=$val2";
 			$obj_Gurpo->consulta($query); // ejecuta la consulta para  borrar la identificacion
-			return '<div id="mensaje"><p/><h4>Se elimino la derivación con exito</h4></div>'; // retorna todos los registros afectados
+			return '<div id="mensaje"><p/><h4>Se elimino la Asignación con exito</h4></div>'; // retorna todos los registros afectados
 
    }
         function Cerrardrvs($val)	// elimina la identificacion
