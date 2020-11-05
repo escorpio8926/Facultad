@@ -75,7 +75,7 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
      <tr>
          <th></th>
 
-        <th style="text-align: :justify">Número de Ficha <input type="number" id="nro_exp" name="nro_exp" class="numero" min="1" max="99999" align="right" value = "<?php print $id_exp ?>" tabindex="1" id="nro_exp" <?php print $s ?> onkeypress="return check(event,value)" oninput="checkLength1()" disabled required ></th>
+        <th style="text-align: :justify"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Número de Ficha <input type="number" id="nro_exp" name="nro_exp" class="numero" min="1" max="99999" align="right" value = "<?php print $id_exp ?>" tabindex="1" id="nro_exp" <?php print $s ?> onkeypress="return check(event,value)" oninput="checkLength1()" disabled required ></th>
        
     </tr>
     <tr>
