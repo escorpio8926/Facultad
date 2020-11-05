@@ -237,7 +237,7 @@ if($total = pg_num_rows($result)){
 
             if($_SESSION['habil']>1){
                 print '<div id="grilla"> <br/><br/><table border=1>'
-                .'<th>Nro Expediente</th>
+                .'<th>Nro Ficha</th>
                 <th>Fecha Alta</th>
                 <th>Apellido y Nombre</th>
                 <th>D.N.I.</th>
@@ -315,7 +315,7 @@ if($total1 = pg_num_rows($result1)){
 
             if($_SESSION['habil']==1){
                 print '<div id="grilla"> <br/><br/><table border=1>'
-                .'<th>Nro Expediente</th>
+                .'<th>Nro Ficha</th>
                 <th>Fecha Alta</th>
                 <th>Apellido y Nombre</th>
                 <th>D.N.I.</th>
@@ -450,7 +450,7 @@ $NuevaFicha=new Ficha();
 $NuevaFicha= $NuevaFicha->getFicha($_SESSION['id_user'],$_SESSION['habil']); // obtiene todos las salidas para despues mostrarlas
 if($_SESSION['habil']>1){
     print '<div  id="grilla"> <br/><br/><table style="display:<?php print $van ?>"  border=1 ">'
-    .'<th height="50">Nº Expediente</th>
+    .'<th height="50">Nº Ficha</th>
     <th>Fecha</th>
     <th>Apellido y Nombre</th>
     <th>CUIL</th>
@@ -495,7 +495,7 @@ print '<br>';
 else
 {
         print '<div  id="grilla"> <br/><br/><table border=1 ">'
-    .'<th height="50">Nº Expediente</th>
+    .'<th height="50">Nº Ficha</th>
     <th>Fecha</th>
     <th>Apellido y Nombre</th>
     <th>CUIL</th>

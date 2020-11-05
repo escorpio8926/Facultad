@@ -31,7 +31,7 @@ if (isset($_SESSION['habil']))
         $item1_1=new Items('Cargar Nueva','./nueva_ficha.php');
         $opcion1->insertarItems($item1_1);
 
-        $item1_2=new Items('Listado de Expedientes','./Listado.php');
+        $item1_2=new Items('Listado de Fichas','./Listado.php');
         $opcion1->insertarItems($item1_2);
 
                 //--------------------------------------------------------------
@@ -145,10 +145,10 @@ if (isset($_SESSION['habil']))
         $opcion2=new Opcion('Informes de Carga');
         $menu1->insertarOpciones($opcion2);
 
-        $item1_1=new Items('Visualizar Expedientes','./visualizar_ficha.php');
+        $item1_1=new Items('Visualizar Fichas','./visualizar_ficha.php');
         $opcion2->insertarItems($item1_1);
 
-        $item1_2=new Items('Listado de Expedientes','./Listados.php');
+        $item1_2=new Items('Listado de Fichas','./Listados.php');
         $opcion2->insertarItems($item1_2);
 
         $opcion2=new Opcion('Reportes');
@@ -197,7 +197,7 @@ if (isset($_SESSION['habil']))
         $item1_1=new Items('Cargar Nueva','./nueva_ficha.php');
         $opcion1->insertarItems($item1_1);
 
-        $item1_2=new Items('Listado de Expedientes','./Listado.php');
+        $item1_2=new Items('Listado de Fichas','./Listado.php');
         $opcion1->insertarItems($item1_2);
 
     }

@@ -18,7 +18,7 @@ include 'foot.php';
     if ($_SESSION['habil']>1) {     // nivel de permiso 2 o mayor
     $busqueda =$_GET['busqueda'];    //paso el parametro busqueda
     if (empty($busqueda))             // si busqueda esta vacia
-    {echo "<strong> <p>Ingrese Apellido/cuil/Numero de Expediente</p></strong>";}
+    {echo "<strong> <p>Ingrese Apellido/cuil/Numero de Ficha</p></strong>";}
     else{
         new conexion();
         if(is_numeric($busqueda)){               //si el dato ingresado es numerico
@@ -42,7 +42,7 @@ if($total = pg_num_rows($result)){
 
             if($_SESSION['habil']>1){
                 print '<div id="grilla"> <br/><br/><table border=1>'
-                .'<th>Nro Expediente</th>
+                .'<th>Nro Ficha</th>
                 <th>Fecha Alta</th>
                 <th>Apellido y Nombre</th>
                 <th>CUIL.</th>
@@ -125,7 +125,7 @@ if($total1 = pg_num_rows($result1)){
 
             if($_SESSION['habil']==1){
                   print '<div id="grilla"> <br/><br/><table border=1>'
-                .'<th>Nro Expediente</th>
+                .'<th>Nro Ficha</th>
                 <th>Fecha Alta</th>
                 <th>Apellido y Nombre</th>
                 <th>CUIL.</th>
@@ -195,7 +195,7 @@ $NuevaFicha= $NuevaFicha->getFicha($_SESSION['id_user'],$_SESSION['habil']); // 
     if($f>0){ 
 if($_SESSION['habil']>1){
     print '<div  id="grilla"> <br/><br/><table border=1 ">'
-    .'<th height="50">Nº Expediente</th>
+    .'<th height="50">Nº Ficha</th>
     <th>Fecha</th>
     <th>Apellido y Nombre</th>
     <th>CUIL.</th>
@@ -262,7 +262,7 @@ print '<br>';
 else
 {
      print '<div  id="grilla"> <br/><br/><table border=1 ">'
-    .'<th height="50">Nº Expediente</th>
+    .'<th height="50">Nº Ficha</th>
     <th>Fecha</th>
     <th>Apellido y Nombre</th>
     <th>CUIL.</th>
