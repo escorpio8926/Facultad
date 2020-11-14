@@ -75,7 +75,7 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
      <tr>
          <th></th>
 
-        <th style="text-align: :justify"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Número de Ficha <input type="number" id="nro_exp" name="nro_exp" class="numero" min="1" max="99999" align="right" value = "<?php print $id_exp ?>" tabindex="1" id="nro_exp" <?php print $s ?> onkeypress="return check(event,value)" oninput="checkLength1()" disabled required ></th>
+        <th style="text-align: :justify"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Número de Ficha <input type="text" id="nro_exp" name="nro_exp" class="entero" minlength="1" maxlength="9" align="right" value = "<?php print $id_exp ?>" tabindex="1" style="width:21%"  <?php print $s ?> oninput="checkLength1()" disabled required ></th>
        
     </tr>
     <tr>
@@ -94,7 +94,7 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
     <tr>
 
         <th colspan="1"  style="text-align: center;text-indent:">
-            CUIL: <input type="number" style="width:30%" class="cuil" min="200000000" max="99999999999" name="cuil" id="cuil"  value = "<?php print $cuil ?>" tabindex="3" onkeypress="return check(event,value)" oninput="checkLength2()" <?php print $s ?> disabled required>
+            CUIL: <input type="text" style="width:30%" class="entero" minlength="10" maxlength="11" name="cuil" id="cuil"  value = "<?php print $cuil ?>" tabindex="3"  oninput="checkLength2()" <?php print $s ?> disabled required>
         </th>
 
     </tr>
@@ -172,7 +172,7 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
              style="width: 42%;" name="padron" id="padron" value ="<?php print $padron ?>" tabindex="14" onkeydown="return tab_btn11(event,getElementById('padron'),getElementById('telcon'))" disabled >
         </th>
         <th colspan="1"  style="text-align: justify;">
-           &nbsp;&nbsp;Teléfono de contacto: <input type="text" class="entero" maxlength="10" placeholder="Ej. 3815484027" style="width: 30.7%"  name="telcon" id="telcon"  value = "<?php print $telcon ?>" tabindex="15" onkeypress="return check(event,value)"  onkeydown="return tab_btn11(event,getElementById('telcon'),getElementById('encuestador'))" disabled>
+           &nbsp;&nbsp;Teléfono de contacto: <input type="text" class="entero" maxlength="10" placeholder="Ej: 3815484027" style="width: 30.7%"  name="telcon" id="telcon"  value = "<?php print $telcon ?>" tabindex="15"  onkeydown="return tab_btn11(event,getElementById('telcon'),getElementById('encuestador'))" disabled>
         </th>
 
     </tr>
@@ -186,7 +186,7 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
         <tr>
         <th colspan="2"  style="text-align: center;">
             <b>Apellido y nombre</b>
-           <input type="text" style="width:50%"  class="texto" name="encuestador" id="encuestador" value="<?php print $encuestador ?>" tabindex="16" onkeypress="return check(event,value)" oninput="checkLength7d()" onkeydown="return tab_btn1fin(event,getElementById('encuestador'),getElementById('submitguardar'),getElementById('nro'),getElementById('piso'),getElementById('dpto'))" required disabled>
+           <input type="text" style="width:50%"  class="texto" name="encuestador" id="encuestador" value="<?php print $encuestador ?>" tabindex="16"  oninput="checkLength7d()" onkeydown="return tab_btn1fin(event,getElementById('encuestador'),getElementById('submitguardar'),getElementById('nro'),getElementById('piso'),getElementById('dpto'))" required disabled>
 
 
         </th> 
@@ -999,19 +999,19 @@ function checkLengthy()
         var fieldLength1 = document.getElementById('provincia').value.length;
         var paso = document.getElementById('padron');
         var paso1 = document.getElementById('telcon');
-        var paso2 = document.getElementById('t_ali');
+        
         
 
         if(fieldLength1 >= 1){
             paso.disabled=false;
             paso1.disabled=false;
-            paso2.disabled=false;
+          
         }
         else
         {
           paso.disabled=true;
-           paso1.disabled=true;
-            paso2.disabled=true;
+          paso1.disabled=true;
+            
             
         }
 }
