@@ -535,7 +535,7 @@ while ($row=  pg_fetch_array($NuevaFicha)) // recorre los identificaciones uno p
       /*  .'</tr>';*/
     }
 
-    if($row['t_ali']==2 && $row['p_ali']==2 &&$row['meren']==2 && $row['muni']==2  ){
+    
         print '<tr>'
         .'<td height="40">'.$row['id_exp'].'</td>'
         .'<td>'.strftime("%d-%m-%Y", strtotime($row['fecha_ei'])) .'</td>'
@@ -550,7 +550,7 @@ while ($row=  pg_fetch_array($NuevaFicha)) // recorre los identificaciones uno p
      /*   .'<td><a href="javascript:;" onclick= avisoi("nueva_ficha.php?brId='.$row['id_exp'].'","'.$row['id_exp'].'");>Eliminar Ficha</a></td>'*/
 //                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$row['id_salida_mes'].'","'.$row['mes'].'");>Cerrar Salida</a></td>'
         .'</tr>';
-    }
+    
    } 
 }
 print '</table>';
