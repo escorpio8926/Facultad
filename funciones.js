@@ -2,7 +2,6 @@ $(document).ready(function(){
 
 // No copiar, pegar y cortar
 
-
 $("input:text").bind('copy', function(e) {
   return false;
 });

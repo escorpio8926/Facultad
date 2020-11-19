@@ -522,7 +522,7 @@ while ($row=  pg_fetch_array($NuevaFicha)) // recorre los identificaciones uno p
   $dato=pg_num_rows($result);
 
     if($dato!=1){
-    if($row['t_ali']==1 || $row['p_ali']==1 || $row['meren']==1 || $row['muni']==1  ){
+
   /*      print '<tr>'
         .'<td  height="40">'.$row['id_exp'].'</td>'
         .'<td>'.strftime("%d-%m-%Y", strtotime($row['fecha_ei'])) .'</td>'
@@ -533,9 +533,9 @@ while ($row=  pg_fetch_array($NuevaFicha)) // recorre los identificaciones uno p
 
 //                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$row['id_salida_mes'].'","'.$row['mes'].'");>Cerrar Salida</a></td>'
       /*  .'</tr>';*/
-    }
+    
 
-    if($row['t_ali']==2 && $row['p_ali']==2 &&$row['meren']==2 && $row['muni']==2  ){
+    
         print '<tr>'
         .'<td height="40">'.$row['id_exp'].'</td>'
         .'<td>'.strftime("%d-%m-%Y", strtotime($row['fecha_ei'])) .'</td>'
@@ -546,11 +546,11 @@ while ($row=  pg_fetch_array($NuevaFicha)) // recorre los identificaciones uno p
         .'<td><a href="grupo_hogar.php?Id='.$row['id_exp'].'">Características de los Miembros del Hogar</a></td>'
         .'<td><a href="ingresos.php?Id='.$row['id_exp'].'">Ingresos del Hogar</a></td>'
         .'<td><a href="sit_mayor.php?Id='.$row['id_exp'].'">Situación Laboral mayores de 14 años</a></td>'
-    /*    .'<td><a href="evaluacion_trabajo.php?Id='.$row['id_exp'].'">Evaluación del Caso y Plan de Trabajo</a></td>'*/
+    /*    .'<td><a href="evaluacion_trabajo.php?Idrow['id_exp'].'">Evaluación del Caso y Plan de Trabajo</a></td>'*/
      /*   .'<td><a href="javascript:;" onclick= avisoi("nueva_ficha.php?brId='.$row['id_exp'].'","'.$row['id_exp'].'");>Eliminar Ficha</a></td>'*/
 //                  .'<td><a href="javascript:;" onclick= avisoj("Salida_Mes.php?crId='.$row['id_salida_mes'].'","'.$row['mes'].'");>Cerrar Salida</a></td>'
         .'</tr>';
-    }
+    
    } 
 }
 print '</table>';
