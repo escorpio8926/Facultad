@@ -100,13 +100,13 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
     </tr>
     <tr>
         <th colspan="2" style="text-align: center;text-indent: 2.5%">
-           Apellido: <input type="text" style="width: 70.2%" class="texto" maxlength="40" name="apellido" id="apellido"  value = "<?php print $apellido ?>" oninput="checkLengthq()" onkeydown="return tab_btn1(event,getElementById('apellido'),getElementById('nombre'))" tabindex="4" disabled required>
+           Apellido: <input type="text" style="width: 70.2%" class="texto" maxlength="40" name="apellido" id="apellido" onkeypress="return soloLetras(event)"  value = "<?php print $apellido ?>" oninput="checkLengthq()" onkeydown="return tab_btn1(event,getElementById('apellido'),getElementById('nombre'))" tabindex="4" disabled required>
         </th>
 
     </tr>
     <tr>
         <th colspan="2"  style="text-align: center;text-indent: 3.1%">
-           Nombre: <input type="text" class="texto" style="width: 70.5%" maxlength="40" name="nombre" id="nombre"  value = "<?php print $nombre ?>"  oninput="checkLengthwnombre()" onkeydown="return tab_btn1(event,getElementById('nombre'),getElementById('email'))" tabindex="5" disabled required>
+           Nombre: <input type="text" class="texto" style="width: 70.5%" maxlength="40" name="nombre" id="nombre" onkeypress="return soloLetras(event)"  value = "<?php print $nombre ?>"  oninput="checkLengthwnombre()" onkeydown="return tab_btn1(event,getElementById('nombre'),getElementById('email'))" tabindex="5" disabled required>
         </th>
 
     </tr>
@@ -126,7 +126,7 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
     <tr>
 
         <th colspan="1"  style="text-align: right;">
-            Calle:<input type="text" class="texto" style="width: 59%" name="calle" id="calle"  value = "<?php print $calle ?>" tabindex="7" oninput="checkLengthe()" onkeydown="return tab_btn1901(event,getElementById('calle'),getElementById('nro'),getElementById('piso'),getElementById('dpto'),getElementById('barrio'))" disabled >
+            Calle:<input type="text" class="texto" style="width: 59%" name="calle" id="calle"  value = "<?php print $calle ?>" tabindex="7" oninput="checkLengthe()" onkeypress="return soloLetras(event)" onkeydown="return tab_btn1901(event,getElementById('calle'),getElementById('nro'),getElementById('piso'),getElementById('dpto'),getElementById('barrio'))" disabled >
         </th>
         <th colspan="1"  style="text-align: justify;">
            &nbsp;&nbsp; Nro:&nbsp; <input type="text" class="entero" style="width: 50%"  maxlength="10" name="nro" id="nro"  value = "<?php print $nro ?>" tabindex="8"  onkeydown="return tab_btn2(event,getElementById('nro'),getElementById('barrio'),getElementById('piso'))" disabled>
@@ -154,14 +154,14 @@ if (isset($_GET['mdId'])) // si la operacion es modificar, este valor viene sete
 
     <tr>
         <th colspan="2"  style="text-align: center;">
-           &nbsp;&nbsp;&nbsp;&nbsp;Localidad: <input type="text" class="texto" style="width: 70.6%" maxlength="40" name="localidad" id="localidad" oninput="checkLengtht()" onkeydown="return tab_btn1(event,getElementById('localidad'),getElementById('provincia'))"  value ="<?php print $localidad ?>" tabindex="12" disabled required>
+           &nbsp;&nbsp;&nbsp;&nbsp;Localidad: <input type="text" onkeypress="return soloLetras(event)" class="texto" style="width: 70.6%" maxlength="40" name="localidad" id="localidad" oninput="checkLengtht()" onkeydown="return tab_btn1(event,getElementById('localidad'),getElementById('provincia'))"  value ="<?php print $localidad ?>" tabindex="12" disabled required>
         </th>
 
     </tr>
 
     <tr>
         <th colspan="2"  style="text-align: center;">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provincia: <input type="text" class="texto" style="width: 70.3%" maxlength="40" name="provincia" id="provincia" oninput="checkLengthy()" onkeydown="return tab_btn1(event,getElementById('provincia'),getElementById('padron'))"  value = "<?php print $provincia ?>" tabindex="13" disabled required>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provincia: <input type="text" onkeypress="return soloLetras(event)" class="texto" style="width: 70.3%" maxlength="40" name="provincia" id="provincia" oninput="checkLengthy()" onkeydown="return tab_btn1(event,getElementById('provincia'),getElementById('padron'))"  value = "<?php print $provincia ?>" tabindex="13" disabled required>
         </th>
 
     </tr>
@@ -1317,6 +1317,35 @@ window.location = str2.concat(product);
 }
 //-->
 </script>
+
+<script>
+  function soloLetras(e) {
+      key = e.keyCode || e.which;
+      tecla = String.fromCharCode(key).toLowerCase();
+      letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+      especiales = [8, 37, 39, 46];
+  
+      tecla_especial = false
+      for(var i in especiales) {
+          if(key == especiales[i]) {
+              tecla_especial = true;
+              break;
+          }
+      }
+  
+      if(letras.indexOf(tecla) == -1 && !tecla_especial)
+          return false;
+  }
+  
+  function limpia() {
+      var val = document.getElementById("miInput").value;
+      var tam = val.length;
+      for(i = 0; i < tam; i++) {
+          if(!isNaN(val[i]))
+              document.getElementById("miInput").value = '';
+      }
+  }
+  </script>
 
 </body>
 
